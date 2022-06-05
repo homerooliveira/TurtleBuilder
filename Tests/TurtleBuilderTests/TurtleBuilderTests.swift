@@ -3,7 +3,7 @@ import XCTest
 
 final class TurtleBuilderTests: XCTestCase {
 	func testTurtleEmpty() {
-		let t = Turtle {
+        var t = Turtle {
 			pass()
 			pass()
 		}
@@ -11,7 +11,7 @@ final class TurtleBuilderTests: XCTestCase {
 	}
 
 	func testTurtleNoPenDown() {
-		let t = Turtle {
+        var t = Turtle {
 			forward(10)
 			forward(10)
 		}
@@ -19,18 +19,18 @@ final class TurtleBuilderTests: XCTestCase {
 	}
 
 	func testTurtleWithOneLine() {
-		let t = Turtle {
+        var t = Turtle {
 			penDown()
 			forward(10)
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)))
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)), "\(t.lines[0][1])")
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
 	func testTurtleIf() {
-		let t = Turtle {
+        var t = Turtle {
 			penDown()
 			if true {
 				forward(10)
@@ -41,12 +41,12 @@ final class TurtleBuilderTests: XCTestCase {
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)))
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)))
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
 	func testTurtleIf2() {
-		let t = Turtle {
+        var t = Turtle {
 			penDown()
 			if false {
 				pass()
@@ -57,12 +57,12 @@ final class TurtleBuilderTests: XCTestCase {
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)))
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)))
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
 	func testTurtleLoop1() {
-		let t = Turtle {
+        var t = Turtle {
 			penDown()
 			loop(10) {
 				forward(10)
@@ -75,7 +75,7 @@ final class TurtleBuilderTests: XCTestCase {
 	}
 
 	func testTurtleLoop2() {
-		let t = Turtle {
+        var t = Turtle {
 			loop(10) {
 				penDown()
 				left(20)
@@ -91,7 +91,7 @@ final class TurtleBuilderTests: XCTestCase {
 	}
 
 	func testTurtleLoopWithCenter() {
-		let t = Turtle {
+        var t = Turtle {
 			loop(10) {
 				center()
 				penDown()
@@ -103,13 +103,13 @@ final class TurtleBuilderTests: XCTestCase {
 		}
 		XCTAssertTrue(t.lines.count == 10)
 		for i in t.lines {
-			XCTAssertTrue(i.first?.0 == Double(0))
-			XCTAssertTrue(i.first?.1 == Double(0))
+			XCTAssertTrue(i.first?.x == 0)
+			XCTAssertTrue(i.first?.y == 0)
 		}
 	}
 
 	func testTurn1() {
-		let t = Turtle {
+        var t = Turtle {
 			left(20)
 			right(20)
 			penDown()
@@ -117,12 +117,12 @@ final class TurtleBuilderTests: XCTestCase {
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)) )
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)) )
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
 	func testTurn2() {
-		let t = Turtle {
+        var t = Turtle {
 		left(20)
 		left(-20)
 			penDown()
@@ -130,12 +130,12 @@ final class TurtleBuilderTests: XCTestCase {
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)) )
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)) )
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
 	func testMacro() {
-		let t = Turtle {
+        var t = Turtle {
 			penDown()
 			setMacro("forward") {
 				forward(10)
@@ -145,21 +145,10 @@ final class TurtleBuilderTests: XCTestCase {
 			penUp()
 		}
 		XCTAssertTrue(t.lines.count == 1)
-		XCTAssertTrue(t.lines[0][0] == (Double(0), Double(0)) )
-		XCTAssertTrue(t.lines[0][1] == (Double(0), Double(10)) )
+        XCTAssertTrue(t.lines[0][0] == .init(x: 0, y: 0))
+        XCTAssertTrue(t.lines[0][1] == .init(x: 0, y: 10))
 	}
 
-	static var allTests = [
-		("testTurtleEmpty", testTurtleEmpty),
-		("testTurtleWithOneLine", testTurtleWithOneLine),
-		("testTurtleIf", testTurtleIf),
-		("testTurtleLoop1", testTurtleLoop1),
-		("testTurtleLoop2", testTurtleLoop2),
-		("testTurtleLoopWithCenter", testTurtleLoopWithCenter),
-		("testTurn1", testTurn1),
-		("testTurn2", testTurn2),
-		("testMacro", testMacro),
-	]
 }
 
 
